@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_activity">#E9F5DB</color>
+    <color name="background_btn">#718355</color>
+    <color name="textb">#B5C99A</color>
 </resources>
