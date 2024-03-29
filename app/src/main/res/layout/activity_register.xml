@@ -5,9 +5,60 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_activity"
-    tools:context=".RegisterActivity">
+        android:background="@color/background_activity"
+    tools:context=".RegisterActivity"
+    android:padding="20dp"
+    >
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"
+    android:text="Register"
+    android:textSize="50sp"
+    android:textStyle="bold"
+    android:textColor="@color/textb"
+    android:gravity="center"
+    android:layout_above="@id/emailTIL"
+    />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <EditText
+            android:id="@+id/emailEt"
+            android:background="@color/backgroundEt"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:textColor="#718355"
+            android:hint="email"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailTIL"
+        app:passwordToggleEnabled="true">
+        <EditText
+            android:id="@+id/passwordEt"
+            android:background="@color/backgroundEt"
+            android:inputType="textPassword"
 
-
+            android:layout_width="match_parent"
+            android:textColor="#718355"
+            android:hint="password"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordTIL"
+        android:text="Register"
+        android:textColor="@color/textb"
+        android:backgroundTint="@color/background_btn"
+        />
 </RelativeLayout>

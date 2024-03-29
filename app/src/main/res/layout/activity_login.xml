@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,5 +8,56 @@
     android:background="@color/background_activity"
     tools:context=".LoginActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAlignment="center"
+        android:text="Login"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@color/textb"
+        android:gravity="center"
+        android:layout_above="@id/emailTIL"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <EditText
+            android:id="@+id/emailEt"
+            android:background="@color/backgroundEt"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:textColor="#718355"
+            android:hint="email"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emailTIL"
+        app:passwordToggleEnabled="true">
+        <EditText
+            android:id="@+id/passwordEt"
+            android:background="@color/backgroundEt"
+            android:inputType="textPassword"
+
+            android:layout_width="match_parent"
+            android:textColor="#718355"
+            android:hint="password"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/registerBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordTIL"
+        android:text="Login"
+        android:textColor="@color/textb"
+        android:backgroundTint="@color/background_btn"
+        />
+</RelativeLayout>
