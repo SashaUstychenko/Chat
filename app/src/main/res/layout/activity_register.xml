@@ -61,4 +61,13 @@
         android:textColor="@color/textb"
         android:backgroundTint="@color/background_btn"
         />
+    <TextView
+        android:id="@+id/have_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alredy have account? Login"
+        android:textAlignment="center"
+        android:layout_below="@id/registerBtn"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/textb"/>
 </RelativeLayout>

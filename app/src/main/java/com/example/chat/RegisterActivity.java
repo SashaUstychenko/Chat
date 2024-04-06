@@ -7,6 +7,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,11 +24,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.regex.Pattern;
-
 public class RegisterActivity extends AppCompatActivity {
     EditText mEmailEt,mPasswordEt;
     Button mRegisterBtn;
+    TextView mHaveAccount;
     ProgressDialog progressDialog;
 
     private FirebaseAuth mAuth;
@@ -42,12 +42,20 @@ public class RegisterActivity extends AppCompatActivity {
         mEmailEt = findViewById(R.id.emailEt);
         mPasswordEt = findViewById(R.id.passwordEt);
         mRegisterBtn = findViewById(R.id.registerBtn);
+        mHaveAccount = findViewById(R.id.have_account);
 
         mAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registering User...");
 
+
+        mHaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            }
+        });
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     FirebaseUser user = mAuth.getCurrentUser();
                     Toast.makeText(RegisterActivity.this, "Registered...\n"+user.getEmail(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this,PrifileActivity.class));
+                    startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
                     finish();
 
                 }else
