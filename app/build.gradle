@@ -36,6 +36,7 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.firebase.auth
+    implementation libs.firebase.core
     testImplementation libs.junit
     testImplementation libs.firebase.auth
     androidTestImplementation libs.ext.junit
