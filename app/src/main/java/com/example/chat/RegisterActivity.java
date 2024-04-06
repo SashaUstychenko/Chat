@@ -1,6 +1,7 @@
 package com.example.chat;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -90,6 +91,10 @@ public class RegisterActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     progressDialog.dismiss();
                     FirebaseUser user = mAuth.getCurrentUser();
+                    Toast.makeText(RegisterActivity.this, "Registered...\n"+user.getEmail(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(RegisterActivity.this,PrifileActivity.class));
+                    finish();
+
                 }else
                 {
                     progressDialog.dismiss();
