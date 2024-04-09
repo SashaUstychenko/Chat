@@ -23,6 +23,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     EditText mEmailEt,mPasswordEt;
@@ -89,7 +93,21 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     progressDialog.dismiss();
                     FirebaseUser user = mAuth.getCurrentUser();
-                    startActivity(new Intent(LoginActivity.this,ProfileActivity.class));
+                    String email = user.getEmail();
+                    String uid = user.getUid();
+                    HashMap<Object,String> hashMap = new HashMap<>();
+
+                    hashMap.put("email",email);
+                    hashMap.put("uid",uid);
+                    hashMap.put("name","");
+                    hashMap.put("phone","");
+                    hashMap.put("image","");
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference reference = database.getReference("Users");
+                    reference.child(uid).setValue(hashMap);
+
+                    startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                     finish();
 
                 }else{
