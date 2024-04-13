@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.1"
+cardviewV7 = "28.0.0"
 firebaseCore = "21.1.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -13,8 +14,10 @@ firebaseAuth = "22.3.1"
 firebaseDatabase = "20.3.1"
 picasso = "2.8"
 firebaseStorage = "20.3.0"
+recyclerviewV7 = "28.0.0"
 
 [libraries]
+cardview-v7 = { module = "com.android.support:cardview-v7", version.ref = "cardviewV7" }
 firebase-core = { module = "com.google.firebase:firebase-core", version.ref = "firebaseCore" }
 firebase-stotage = { module = "com.google.firebase:firebase-stotage", version.ref = "firebaseCore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,6 +32,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+recyclerview-v7 = { module = "com.android.support:recyclerview-v7", version.ref = "recyclerviewV7" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

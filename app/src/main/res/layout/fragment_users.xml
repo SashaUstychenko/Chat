@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="@color/background_activity"
+
 
     tools:context=".UsersFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:text="Users"
-        android:gravity="center"
+    <androidx.recyclerview.widget.RecyclerView
 
-        android:textSize="30sp"/>
+
+        android:id="@+id/users_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

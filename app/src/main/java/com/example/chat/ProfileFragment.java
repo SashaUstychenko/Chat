@@ -1,5 +1,6 @@
 package com.example.chat;
 
+
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
@@ -77,8 +78,8 @@ public class ProfileFragment extends Fragment {
     private static final int IMAGE_PICK_CAMERA_CODE =400;
 
     String profileOrCoverPhoto;
-    String cameraPermission[];
-    String storagePermission[];
+    String []cameraPermission;
+    String []storagePermission;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -132,8 +133,8 @@ public class ProfileFragment extends Fragment {
 
 
 
-        cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_MEDIA_IMAGES};
+        storagePermission = new String[]{Manifest.permission.READ_MEDIA_IMAGES};
 
 
         avatarIv = view.findViewById(R.id.avatarIv);
@@ -162,6 +163,7 @@ public class ProfileFragment extends Fragment {
 
                     try {
                         Picasso.get().load(image).into(avatarIv);
+                        avatarIv.setRotation(90);
 
                     }catch (Exception e)
                     {
@@ -171,10 +173,12 @@ public class ProfileFragment extends Fragment {
                     try {
                         Picasso.get().load(cover).into(coverIv);
 
+
+
                     }catch (Exception e)
                     {
 
-
+                        Picasso.get().load(R.drawable.ic_add_image).into(coverIv);
                     }
 
                 }
@@ -197,18 +201,18 @@ public class ProfileFragment extends Fragment {
     }
     private boolean checkStoragePermission() {
 
-    boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            == (PackageManager.PERMISSION_GRANTED);
-    return result;
+        boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_MEDIA_IMAGES)
+                == (PackageManager.PERMISSION_GRANTED);
+        return result;
 
-}
+    }
     private  void requestStoragePermission(){
-    requestPermissions(storagePermission,STORAGE_REQUEST_CODE);
-}
+        requestPermissions(storagePermission,STORAGE_REQUEST_CODE);
+    }
     private boolean checkCameraPermission() {
         boolean result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                 == (PackageManager.PERMISSION_GRANTED);
-        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        boolean result1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_MEDIA_IMAGES)
                 == (PackageManager.PERMISSION_GRANTED);
         return result&&result1;
 
@@ -255,7 +259,6 @@ public class ProfileFragment extends Fragment {
         builder.setTitle("Update "+key);
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setBackgroundColor(Integer.parseInt("#e9f5db"));
         EditText editText = new EditText(getActivity());
         editText.setHint("Enter "+key);
         linearLayout.addView(editText);
@@ -294,6 +297,7 @@ public class ProfileFragment extends Fragment {
         builder.setNegativeButton("Cansel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                pd.dismiss();
 
             }
         });
@@ -343,21 +347,21 @@ public class ProfileFragment extends Fragment {
                 {
                     boolean cameraAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
                     boolean writeStorageAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted&&writeStorageAccepted)
+                    if (cameraAccepted || writeStorageAccepted)
                     {
                         pickFromCamera();
                     }else
                     {
-                        Toast.makeText(getActivity(), "Please enable camera& storage permission", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Please enable camera & storage permission", Toast.LENGTH_SHORT).show();
                     }
                 }
 
             }
+            break;
             case STORAGE_REQUEST_CODE:{
                 if (grantResults.length>0)
                 {
-                    boolean cameraAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
-                    boolean writeStorageAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED ;
                     if (writeStorageAccepted)
                     {
                         pickFromGallery();
@@ -367,9 +371,9 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             }
+            break;
         }
 
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -396,38 +400,37 @@ public class ProfileFragment extends Fragment {
         StorageReference storageReference2nd = storageReference.child(filePathAndNAme);
         storageReference2nd.putFile(uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while(!uriTask.isSuccessful())
-                {
-                    Uri downloadUri = uriTask.getResult();
-                    if (uriTask.isSuccessful())
-                    {
-                        HashMap<String,Object> results = new HashMap<>();
-                        results.put(profileOrCoverPhoto,downloadUri.toString());
-                        databaseReference.child(user.getUid()).updateChildren(results)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        pd.dismiss();
-                                        Toast.makeText(getActivity(), "Image Updated...", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        pd.dismiss();
-                                        Toast.makeText(getActivity(), "Erro Updating Image...", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while(!uriTask.isSuccessful());
+                        Uri downloadUri = uriTask.getResult();
+                        if (uriTask.isSuccessful())
+                        {
+                            HashMap<String,Object> results = new HashMap<>();
+                            results.put(profileOrCoverPhoto,downloadUri.toString());
+                            databaseReference.child(user.getUid()).updateChildren(results)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            pd.dismiss();
+                                            Toast.makeText(getActivity(), "Image Updated...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            pd.dismiss();
+                                            Toast.makeText(getActivity(), "Erro Updating Image...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                    }else {
-                        pd.dismiss();
-                        Toast.makeText(getActivity(), "Some error", Toast.LENGTH_SHORT).show();
+                        }else {
+                            pd.dismiss();
+                            Toast.makeText(getActivity(), "Some error", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         pd.dismiss();

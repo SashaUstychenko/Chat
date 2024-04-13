@@ -42,6 +42,9 @@ dependencies {
     testImplementation libs.junit
     implementation libs.picasso
 
+    implementation 'com.github.AtifSayings:CircularImageView:1.0.2'
+
+
     testImplementation libs.firebase.auth
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
