@@ -1,4 +1,4 @@
-package com.example.chat;
+package com.example.chat.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.chat.R;
+import com.example.chat.models.ModelUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
