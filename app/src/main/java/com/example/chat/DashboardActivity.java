@@ -64,15 +64,21 @@ public class DashboardActivity extends AppCompatActivity {
                        return true;
                    } else if (menuItem.getItemId() == R.id.nav_profile) {
                        ProfileFragment fragment2 = new ProfileFragment();
-                       FragmentTransaction ft1 =getSupportFragmentManager().beginTransaction();
-                       ft1.replace(R.id.content,fragment2,"");
-                       ft1.commit();
+                       FragmentTransaction ft2 =getSupportFragmentManager().beginTransaction();
+                       ft2.replace(R.id.content,fragment2,"");
+                       ft2.commit();
                        return true;
                    } else if (menuItem.getItemId() == R.id.nav_users) {
                        UsersFragment fragment3 = new UsersFragment();
-                       FragmentTransaction ft1 =getSupportFragmentManager().beginTransaction();
-                       ft1.replace(R.id.content,fragment3,"");
-                       ft1.commit();
+                       FragmentTransaction ft3 =getSupportFragmentManager().beginTransaction();
+                       ft3.replace(R.id.content,fragment3,"");
+                       ft3.commit();
+                       return true;
+                   }else if (menuItem.getItemId() == R.id.nav_chat) {
+                       ChatLIstFragment fragment4 = new ChatLIstFragment();
+                       FragmentTransaction ft4 =getSupportFragmentManager().beginTransaction();
+                       ft4.replace(R.id.content,fragment4,"");
+                       ft4.commit();
                        return true;
                    }
                    return false;

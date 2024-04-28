@@ -1,6 +1,7 @@
 package com.example.chat.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.chat.ChatActivity;
 import com.example.chat.R;
 import com.example.chat.models.ModelUser;
 import com.squareup.picasso.Picasso;
@@ -36,9 +38,10 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+        final String hisUID = userList.get(position).getUid();
         String userImages = userList.get(position).getImage();
         String userName = userList.get(position).getName();
-        String userEmail = userList.get(position).getEmail();
+        final String userEmail = userList.get(position).getEmail();
 
 
 
@@ -48,18 +51,16 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder>{
             Picasso.get().load(userImages)
                     .placeholder(R.drawable.ic_defaul_img)
                     .into(holder.mAvatarIv);
-
-
-
+            holder.mAvatarIv.setRotation(90);
         }catch (Exception e)
         {
 
         }
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, ""+userEmail, Toast.LENGTH_SHORT).show();
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("hisUid",hisUID);
+            context.startActivity(intent);
+
         });
 
     }
